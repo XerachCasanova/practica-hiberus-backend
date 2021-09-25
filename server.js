@@ -43,7 +43,7 @@ app.use("/productos", productosRoute);
 app.use("/pedidos", pedidosRoute);
 
 
-const port = 3000;
+const port = 80;
 const server = app.listen(port, () => {
     console.log('Servidor escuchando en el puerto --> '+ port);
 })
