@@ -3,6 +3,7 @@ const usuarioRoute = express.Router();
 const Usuario = require('../models/usuario');
 const bcrypt = require('bcrypt');
 
+
 const { checkSchema, validationResult } = require('express-validator');
 
 const checkUsuario = require('../validators/checkUsuario');
@@ -54,7 +55,6 @@ usuarioRoute.route('/').post(checkSchema(checkUsuario), async (req, res, next) =
   usuarioWithHash = { ...req.body, clave: passHashed };
 
 
-
   Usuario.create(usuarioWithHash, (error, data) => {
 
     if (error) {
@@ -84,7 +84,6 @@ usuarioRoute.route("/:id").put(checkSchema(checkUsuario), async (req, res, next)
     let usuarioPass = await Usuario.findById(req.params.id);
     passHashed = usuarioPass.clave;
 
-    console.log('VALOR PASS HASHEDDDDDDDDDD', passHashed)
 
   } else {
 
