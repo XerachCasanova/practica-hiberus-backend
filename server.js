@@ -71,38 +71,6 @@ app.use("/productos", productosRoute);
 
 app.use("/pedidos", pedidosRoute);
 
-
-/*
-app.get('/verifyToken', (req, res) => {
-  let tokenRequest = req.headers('authorization'); //Bearer xxxx
-
-  if(tokenRequest && tokenRequest.indexOf("Bearer") === 0){
-    tokenRequest = tokenRoquest.replace(/^Bearer\s+/, "");
-    if(tokenRequest) {
-
-      jwt.verify(tokenRequest, config.claveSecreta, (err, payload) => {
-        if(err){
-          res.json({msg: "Token inválido", error: err})
-        } 
-
-        res.json({msg: "Token válido", datosSecretos: payload});
-      });
-
-    } 
-    
-  }
-  
-  res.json({msg: "Falta el token"})
-
-
-});*/
-
-
-/*const port = 3000;
-const server = app.listen(port, () => {
-    console.log('Servidor escuchando en el puerto --> '+ port);
-})*/
-
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, err => {
     if(err) throw err;
