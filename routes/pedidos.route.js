@@ -1,14 +1,10 @@
 const express = require('express');
-
 const pedidosRoute = express.Router();
-
 const Pedido = require('../models/pedido');
-
 const mongoose = require('mongoose')
-
 const { checkSchema, validationResult } = require('express-validator');
-
 const checkPedido = require('../validators/checkPedido');
+const authorization = require('../routes/authorization');
 
 pedidosRoute.route('/').get((req, res, next) => {
 

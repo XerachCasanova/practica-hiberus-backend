@@ -18,6 +18,7 @@ let checkCategoria =
 
 }
 
+
 categoriaRoute.route('/').get((req, res) => {
 
   Categoria.find((error, data) => {

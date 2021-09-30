@@ -2,12 +2,8 @@ const express = require('express');
 const usuarioRoute = express.Router();
 const Usuario = require('../models/usuario');
 const bcrypt = require('bcrypt');
-
-
 const { checkSchema, validationResult } = require('express-validator');
-
 const checkUsuario = require('../validators/checkUsuario');
-
 
 usuarioRoute.route('/').get((req, res, next) => {
 

@@ -1,28 +1,57 @@
 const jwt = require('jsonwebtoken');
 const configs = require('../config/config');
 
-function filtroAutorizacion(){
-  return (req, res, next) => { 
-      let tokenRequest = req.headers['authorization']; //Bearer XXXXXXXX
+function filtroAutorizacion() {
+
+    
+    return (req, res, next) => {
+
+        let needsAuth = true;
+        let url = req.url;
+        let method = req. method;
+
+        switch(url){
+            case '/productos/':
+                
+                if(method == 'GET') needsAuth=false;
+            break;
+
+            case '/categorias/':
+                if(method == 'GET') needsAuth=false;
+            break;
+
+        }
 
       
-      if(tokenRequest && tokenRequest.indexOf("Bearer")===0) {
-          tokenRequest = tokenRequest.replace(/^Bearer\s+/, "");
-          
-          
-          jwt.verify(tokenRequest, configs.claveSecreta, (err, payload) => {
-              if(err) {
-                  res.json({msg: "Token inválido", error: err});
-              } else {  
-                  
-                  res.seguridad = payload;
-                  next();
-              }
-          })
-      } else {
-          res.json({msg: "token erroneo"});
-      }
-  }
+        if (needsAuth){
+
+            let tokenRequest = req.headers['authorization'];
+
+
+            if (tokenRequest && tokenRequest.indexOf("Bearer") === 0) {
+                tokenRequest = tokenRequest.replace(/^Bearer\s+/, "");
+
+
+                jwt.verify(tokenRequest, configs.claveSecreta, (err, payload) => {
+                    if (err) {
+                        res.json({ msg: "Token inválido", error: err });
+                    } else {
+
+                        res.seguridad = payload;
+                        next();
+                    }
+                })
+            } else {
+                res.json({ msg: "token erroneo" });
+            }
+                
+        } else  next();
+        
+       
+    }
+
+
+    
 };
 
 module.exports = filtroAutorizacion;

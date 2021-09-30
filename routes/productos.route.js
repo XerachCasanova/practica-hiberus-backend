@@ -1,11 +1,8 @@
 const express = require('express');
 const productosRoute = express.Router();
-
 let Producto = require('../models/producto');
 let Categoria = require('../models/categoria');
-
 const { checkSchema, validationResult } = require('express-validator');
-
 const checkProducto = require('../validators/checkProducto');
 
 productosRoute.route('/').get((req, res, next) => {
