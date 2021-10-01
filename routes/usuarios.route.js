@@ -2,8 +2,48 @@ const express = require('express');
 const usuarioRoute = express.Router();
 const Usuario = require('../models/usuario');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const configs = require('../config/config');
 const { checkSchema, validationResult } = require('express-validator');
 const checkUsuario = require('../validators/checkUsuario');
+
+
+usuarioRoute.route('/verifyToken').get((req, res) => {
+  let tokenRequest = req.headers['authorization']; //Bearer XXXXXXXX
+  
+  if(tokenRequest && tokenRequest.indexOf("Bearer")===0) {
+      tokenRequest = tokenRequest.replace(/^Bearer\s+/, "");
+      
+      jwt.verify(tokenRequest, configs.claveSecreta, (err, payload) => {
+          if(err) {
+              res.json({msg: "Token inválido", error: err});
+          } else {
+              res.json({msg: "Token válido", datosSecretos: payload});
+          }
+      })
+  } else {
+      res.json({msg: "Falta el token"});
+  }
+
+})
+
+usuarioRoute.route('/me').post((req, res, next) => {
+
+  Usuario.findOne({username: req.body.username}, {clave: 0, __v:0}, (error, data) => {
+    if (error) {
+
+      return next(error);
+
+    } else {
+
+      res.json(data);
+
+    }
+
+  })
+
+});
+
 
 usuarioRoute.route('/').get((req, res, next) => {
 
@@ -19,6 +59,8 @@ usuarioRoute.route('/').get((req, res, next) => {
     }
   }).select('-__v');
 });
+
+
 
 usuarioRoute.route('/:id').get((req, res, next) => {
 
@@ -37,6 +79,7 @@ usuarioRoute.route('/:id').get((req, res, next) => {
   }).select('-__v');
 
 });
+
 
 usuarioRoute.route('/').post(checkSchema(checkUsuario), async (req, res, next) => {
 

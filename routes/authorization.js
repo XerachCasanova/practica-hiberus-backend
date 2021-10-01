@@ -20,6 +20,10 @@ function filtroAutorizacion() {
                 if(method == 'GET') needsAuth=false;
             break;
 
+            case '/usuarios/verifyToken/':
+                if(method == 'GET') needsAuth=false;
+            break;
+
         }
 
       

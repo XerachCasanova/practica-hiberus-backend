@@ -3,6 +3,8 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 
+const configs = require('./config/config');
+
 
 const dbconfig = require('./database/db');
 //conexión a la bd:
@@ -34,13 +36,15 @@ app.get('/', (req, res) => {
 
 app.use("/login", loginRoute);
 
+
 app.use(authorization());
+
+
+  
 
 app.use("/pedidos", pedidosRoute);
 
 app.use("/productos", productosRoute);
-
-
 
 app.use("/usuarios", usuariosRoute);
 
