@@ -9,6 +9,15 @@ function filtroAutorizacion() {
         let needsAuth = true;
         let url = req.url;
         let method = req. method;
+        
+        let cadenaParams = req.url.split('/');
+        
+        let paramsTresRutas;
+        if(cadenaParams[3]!=''){
+            paramsTresRutas = cadenaParams[3];
+        }
+
+        
 
         switch(url){
             case '/productos/':
@@ -23,6 +32,10 @@ function filtroAutorizacion() {
             case '/usuarios/verifyToken/':
                 if(method == 'GET') needsAuth=false;
             break;
+            case '/pedidos/usuario/'+paramsTresRutas :
+                if(method == 'GET') needsAuth=false;
+            break;
+
 
         }
 
