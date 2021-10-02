@@ -16,13 +16,13 @@ usuarioRoute.route('/verifyToken').get((req, res) => {
       
       jwt.verify(tokenRequest, configs.claveSecreta, (err, payload) => {
           if(err) {
-              res.json({msg: "Token inválido", error: err});
+            res.status(401).json({ msg: "Token inválido", error: err });
           } else {
               res.json({msg: "Token válido", datosSecretos: payload});
           }
       })
   } else {
-      res.json({msg: "Falta el token"});
+    res.status(401).json({ msg: "Token inválido" });
   }
 
 })

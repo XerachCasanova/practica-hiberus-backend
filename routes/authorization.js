@@ -38,7 +38,7 @@ function filtroAutorizacion() {
 
                 jwt.verify(tokenRequest, configs.claveSecreta, (err, payload) => {
                     if (err) {
-                        res.json({ msg: "Token inválido", error: err });
+                        res.status(401).json({ msg: "Token inválido", error: err });
                     } else {
 
                         res.seguridad = payload;
@@ -46,7 +46,7 @@ function filtroAutorizacion() {
                     }
                 })
             } else {
-                res.json({ msg: "token erroneo" });
+                res.status(401).json({ msg: "Token inválido" });
             }
                 
         } else  next();

@@ -35,12 +35,12 @@ loginRoute.route("/").post((req, res, next) => {
     }
     else {
       bcrypt.compare(req.body.clave, resp.clave, (err, clave) => {
-      
+
         if (clave) {
           let payload = {
             username: {
               username: user.username,
-              tipoUsuario: "Admin"
+              tipoUsuario: resp.tipoUsuario
             }
           }
     
